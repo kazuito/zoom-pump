@@ -1,0 +1,56 @@
+html,
+body {
+  width: 280px;
+  border-radius: 5px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0px;
+  margin: 0;
+  background: #3c6ea4;
+  color: #0e0e0e;
+}
+.container {
+  background: white;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 8px;
+}
+h1 {
+  margin: 0;
+  margin-bottom: 4px;
+}
+.msg {
+  font-size: 14px;
+  color: #484848;
+}
+.enhanced {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2a92ce;
+}
+
+.ex-link {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 24px 0 4px;
+  font-size: 0.8rem;
+  color: #ffffff;
+  background: #434343;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+.ex-link:hover{
+  background:#434343ff;
+}
+
+.ex-link > svg {
+  margin-right: 6px;
+}
+
+.gh-icon > path {
+  fill: #fff;
+}
+
+a {
+  text-decoration: none;
+}
