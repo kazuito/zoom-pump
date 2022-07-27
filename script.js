@@ -1,4 +1,3 @@
-// console.log($("body").children()[0].matches("img"));
 var grabbing = false;
 
 var pos = {
@@ -11,10 +10,13 @@ var pos = {
     left: 0,
   },
 };
-if (
-  $("body").children().length == 1 &&
-  $("body").children()[0].matches("img")
-) {
+var is_img =
+  $("body").children().length == 1 && $("body").children()[0].matches("img");
+var is_svg =
+  $(document).children().length == 1 &&
+  $(document).children()[0].matches("svg");
+
+if (is_img) {
   $("head").append(
     `<style>
     body{
@@ -125,12 +127,12 @@ if (
         </style>
   `
   );
-
-  let src = $("body").children()[0].src;
-  let init_img_detail = getDetails("img");
-  let init_w = init_img_detail.w;
-  let init_h = init_img_detail.h;
+  let src, init_img_detail, init_w, init_h;
+  src = $("body").children()[0].src;
+  init_img_detail = getDetails("img");
   console.log(init_img_detail);
+  init_w = init_img_detail.w;
+  init_h = init_img_detail.h;
 
   $("body").append(`
   <img src="${src}" id="t" />
@@ -283,7 +285,18 @@ if (
 
       size_set_state = (size_set_state + 1) % 2;
     });
+    $(document).on("keydown", (e) => {
+      if (e.originalEvent.code == "Escape") {
+        window.close();
+      }
+    });
   });
+} else if (is_svg) {
+  // init_w = $("svg").height;
+  // init_h = $("svg").width;
+  // let svg_tag = $(document).children()[0];
+  // url = "chrome-extension://ofdgcmhklipelkeicnjklcnmikbcanal/svg.html";
+  // window.location.replace(url);
 }
 
 function zoom(e) {
