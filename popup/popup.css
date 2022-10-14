@@ -2,7 +2,7 @@ html,
 body {
   width: 280px;
   border-radius: 5px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Google Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 0px;
   margin: 0;
   background: #3c6ea4;
@@ -15,6 +15,7 @@ body {
   margin: 8px;
 }
 h1 {
+  font-size: 1.6rem;
   margin: 0;
   margin-bottom: 4px;
 }
@@ -39,8 +40,8 @@ h1 {
   padding: 5px 12px;
   border-radius: 20px;
 }
-.ex-link:hover{
-  background:#434343ff;
+.ex-link:hover {
+  background: #434343ff;
 }
 
 .ex-link > svg {
