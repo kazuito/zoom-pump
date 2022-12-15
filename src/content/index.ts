@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 var grabbing = false;
 
 var pos = {
@@ -127,8 +129,8 @@ if (is_img) {
         </style>
   `
   );
-  let src, init_img_detail, init_w, init_h;
-  src = $("body").children()[0].src;
+  let src: string, init_img_detail: any, init_w: number, init_h: number;
+  src = ($("body").children()[0] as HTMLSourceElement).src;
   init_img_detail = getDetails("img");
   console.log(init_img_detail);
   init_w = init_img_detail.w;
@@ -146,7 +148,7 @@ if (is_img) {
   </div>
   `);
 
-  var original_w, original_h;
+  var original_w: number, original_h: number;
 
   $("#t, #draggable-image").on("load", () => {
     var di = $("#di");
@@ -197,8 +199,8 @@ if (is_img) {
     pos.img.left = $("#t").position().left;
 
     $("#t").on("mousedown", (e) => {
-      pos.cursor.x = e.originalEvent.pageX;
-      pos.cursor.y = e.originalEvent.pageY;
+      pos.cursor.x = e.originalEvent?.pageX || 0;
+      pos.cursor.y = e.originalEvent?.pageY || 0;
       pos.img.top = $("#t").position().top;
       pos.img.left = $("#t").position().left;
       e.preventDefault();
@@ -211,8 +213,8 @@ if (is_img) {
     $("body").on("mousemove", (e) => {
       if (grabbing) {
         $("#t").removeClass("move-init");
-        current_x = e.originalEvent.pageX;
-        current_y = e.originalEvent.pageY;
+        let current_x = e.originalEvent?.pageX || 0;
+        let current_y = e.originalEvent?.pageY || 0;
         $("#t").css({
           left: pos.img.left + (current_x - pos.cursor.x),
           top: pos.img.top + (current_y - pos.cursor.y),
@@ -246,7 +248,9 @@ if (is_img) {
 
     document
       .querySelector("#t")
-      .addEventListener("wheel", (e) => zoom(e), { passive: false });
+      ?.addEventListener("wheel", (e) => zoom(e as WheelEvent), {
+        passive: false,
+      });
 
     function fitHeight() {
       return [Math.floor(screen_h), screen_h * img_aspect_ratio];
@@ -275,18 +279,20 @@ if (is_img) {
         default:
           break;
       }
-      $("#t").css({
-        width: w,
-        height: h,
-        left: (screen_w - w) / 2,
-        top: (screen_h - h) / 2,
-      });
+      if (w !== undefined && h !== undefined) {
+        $("#t")?.css({
+          width: Number(w),
+          height: Number(h),
+          left: Number((screen_w - w) / 2),
+          top: Number((screen_h - h) / 2),
+        });
+      }
       drawStatus("m");
 
       size_set_state = (size_set_state + 1) % 2;
     });
     $(document).on("keydown", (e) => {
-      if (e.originalEvent.code == "Escape") {
+      if (e.originalEvent?.code == "Escape") {
         window.close();
       }
     });
@@ -299,7 +305,7 @@ if (is_img) {
   // window.location.replace(url);
 }
 
-function zoom(e) {
+function zoom(e: WheelEvent) {
   $("#t").removeClass("zoom-init move-init");
 
   let h = $("#t").innerHeight();
@@ -321,11 +327,11 @@ function zoom(e) {
   e.preventDefault();
 }
 
-function drawStatus(st) {
+function drawStatus(st: string) {
   switch (st) {
     case "m":
       $("#st-magnification").html(
-        `${Math.round(($("#t").innerHeight() / original_h) * 100)}%`
+        `${Math.round((($("#t").innerHeight() || 0) / original_h) * 100)}%`
       );
       break;
     default:
@@ -333,11 +339,11 @@ function drawStatus(st) {
   }
 }
 
-function getDetails(selector) {
+function getDetails(selector: string) {
   return {
-    h: document.querySelector(selector).getBoundingClientRect().height,
-    w: document.querySelector(selector).getBoundingClientRect().width,
-    t: $(selector).position().top,
-    l: $(selector).position().left,
+    h: document.querySelector(selector)?.getBoundingClientRect().height || 0,
+    w: document.querySelector(selector)?.getBoundingClientRect().width || 0,
+    t: $(selector).position().top || 0,
+    l: $(selector).position().left || 0,
   };
 }
